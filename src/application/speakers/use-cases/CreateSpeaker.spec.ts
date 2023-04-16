@@ -4,6 +4,7 @@ import { EmailAddress } from '../../shared/domain/EmailAddress'
 import { Language } from '../../shared/domain/Language'
 import { SpeakerAlreadyCreatedError } from '../domain/errors/SpeakerAlreadyCreatedError'
 import { SpeakerAge } from '../domain/SpeakerAge'
+import { SpeakerId } from '../domain/SpeakerId'
 import { SpeakerName } from '../domain/SpeakerName'
 import { SpeakerRepository } from '../domain/SpeakerRepository'
 import { SpeakerRepositoryMemory } from '../infrastructure/repositories/SpeakerRepositoryMemory'
@@ -11,7 +12,7 @@ import { CreateSpeaker, CreateSpeakerParams } from './CreateSpeaker'
 
 function joyceLinParams(): CreateSpeakerParams {
   return {
-    id: createJoyceLinId(),
+    id: new SpeakerId(JOYCE_LIN.id),
     name: new SpeakerName(JOYCE_LIN.name),
     age: new SpeakerAge(JOYCE_LIN.age),
     email: new EmailAddress(JOYCE_LIN.email),
