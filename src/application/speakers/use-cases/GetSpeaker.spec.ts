@@ -1,28 +1,29 @@
-import { createJoyceLinSpeaker } from '../../../../test/mother/SpeakerMother'
-import { GetSpeaker } from './GetSpeaker'
-import { SpeakerId } from '../domain/SpeakerId'
-import { JOYCE_LIN } from '../../../shared/fixtures/speakers'
-import { SpeakerRepository } from '../domain/SpeakerRepository'
-import { SpeakerRepositoryMemory } from '../infrastructure/repositories/SpeakerRepositoryMemory'
+import { createJoyceLinId, createJoyceLinSpeaker } from '../../../../test/mother/SpeakerMother'
 import { SpeakerNotFoundError } from '../domain/errors/SpeakerNotFoundError'
+import { SpeakerId } from '../domain/SpeakerId'
+import { SpeakerRepositoryMemory } from '../infrastructure/repositories/SpeakerRepositoryMemory'
+import { GetSpeaker } from './GetSpeaker'
 
 describe('GetSpeaker', () => {
+  let speakerRepository: SpeakerRepositoryMemory
+
+  beforeEach(() => {
+    speakerRepository = new SpeakerRepositoryMemory()
+  })
+
   it('returns the speaker by id', async () => {
-    const expectedSpeakerId = new SpeakerId(JOYCE_LIN.id)
-    const expectedSpeaker = createJoyceLinSpeaker({ id: expectedSpeakerId })
-    const speakerRepository: SpeakerRepository = new SpeakerRepositoryMemory()
-    jest.spyOn(speakerRepository, 'findById').mockReturnValue(Promise.resolve(expectedSpeaker))
+    const expectedSpeakerId = createJoyceLinId()
+    await speakerRepository.save(createJoyceLinSpeaker())
     const getSpeakerUseCase = new GetSpeaker(speakerRepository)
 
     const speaker = await getSpeakerUseCase.execute(expectedSpeakerId)
 
+    const expectedSpeaker = createJoyceLinSpeaker({ id: expectedSpeakerId })
     expect(speaker).toEqual(expectedSpeaker)
   })
 
   it('fails if the speaker does not exist', async () => {
     const notExistentId = new SpeakerId('invalid-id')
-    const speakerRepository: SpeakerRepository = new SpeakerRepositoryMemory()
-    jest.spyOn(speakerRepository, 'findById').mockReturnValue(Promise.resolve(undefined))
     const getSpeakerUseCase = new GetSpeaker(speakerRepository)
 
     const expectedError = new SpeakerNotFoundError(notExistentId)
