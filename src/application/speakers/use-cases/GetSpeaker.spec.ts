@@ -1,8 +1,8 @@
 import { createJoyceLinId, createJoyceLinSpeaker } from '../../../../test/mother/SpeakerMother'
-import { SpeakerNotFoundError } from '../domain/errors/SpeakerNotFoundError'
-import { SpeakerId } from '../domain/SpeakerId'
-import { SpeakerRepositoryMemory } from '../infrastructure/repositories/SpeakerRepositoryMemory'
 import { GetSpeaker } from './GetSpeaker'
+import { SpeakerId } from '../../../shared/domain/ids/SpeakerId'
+import { SpeakerNotFoundError } from '../domain/errors/SpeakerNotFoundError'
+import { SpeakerRepositoryMemory } from '../infrastructure/repositories/SpeakerRepositoryMemory'
 
 describe('GetSpeaker', () => {
   let speakerRepository: SpeakerRepositoryMemory
