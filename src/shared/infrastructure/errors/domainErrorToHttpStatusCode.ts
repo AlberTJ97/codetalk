@@ -8,4 +8,6 @@ export const domainErrorToHttpStatusCode: Record<DomainErrorCode, number> = {
   [DomainErrorCode.UNDERAGE_SPEAKER]: HttpStatus.BAD_REQUEST,
   [DomainErrorCode.TALK_DOES_NOT_EXISTS]: HttpStatus.NOT_FOUND,
   [DomainErrorCode.MAXIMUM_COSPEAKERS_REACHED]: HttpStatus.BAD_REQUEST,
+  [DomainErrorCode.TALK_DESCRIPTION_TOO_LONG]: HttpStatus.BAD_REQUEST,
+  [DomainErrorCode.TALK_TITLE_TOO_LONG]: HttpStatus.BAD_REQUEST,
 }
