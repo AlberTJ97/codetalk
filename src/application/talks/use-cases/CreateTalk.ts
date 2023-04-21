@@ -28,13 +28,12 @@ export class CreateTalk extends UseCase {
   }
 
   async execute(params: CreateTalkParams) {
-    const talk = new Talk(
+    const talk = Talk.create(
       params.id,
       params.title,
       params.description,
       params.language,
       params.cospeakers,
-      TalkStatus.PROPOSAL,
       params.speakerId,
       params.eventId
     )
