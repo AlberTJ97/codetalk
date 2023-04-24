@@ -2,7 +2,7 @@ import { API_TALK } from '../../../../shared/fixtures/talks'
 import { TalkId } from '../../domain/TalkId'
 import { ReviewTalkEndpoint } from './ReviewTalkEndpoint'
 import { FRAN } from '../../../../shared/fixtures/organizers'
-import { ReviewTalk } from '../../use-cases/ReviewTalk'
+import { ReviewTalk, ReviewTalkParams } from '../../use-cases/ReviewTalk'
 import { ReviewTalkRequestDTO } from './dtos/ReviewTalkRequestDTO'
 import { OrganizerId } from '../../../../shared/domain/ids/OrganizerId'
 
@@ -16,9 +16,10 @@ describe('ReviewTalkEndpoint', () => {
 
     await endpoint.execute(API_TALK.id, reviewTalkDTO)
 
-    expect(reviewTalk.execute).toHaveBeenCalledWith({
-      id: TalkId.fromPrimitives(API_TALK.id),
+    const expectedParams: ReviewTalkParams = {
+      talkId: TalkId.fromPrimitives(API_TALK.id),
       reviewerId: OrganizerId.fromPrimitives(FRAN.id),
-    })
+    }
+    expect(reviewTalk.execute).toHaveBeenCalledWith(expectedParams)
   })
 })
