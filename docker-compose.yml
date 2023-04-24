@@ -1,34 +1,27 @@
 version: "3.7"
 services:
   db:
-    image: postgres:14.7-alpine
+    image: mongo
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: develop
-      POSTGRES_USER: acid
+      MONGO_INITDB_ROOT_USERNAME: acid
+      MONGO_INITDB_ROOT_PASSWORD: password
     ports:
-      - "5432:5432"
+      - "27017:27017"
   api:
     build:
       context: .
       dockerfile: ./docker/Dockerfile.dev
     environment:
       DB_HOST: db
-      DB_PORT: 5432
+      DB_PORT: 27017
       DB_USERNAME: acid
       DB_PASSWORD: password
       DB_DATABASE: develop
       DEPLOY_ENV: dev
-
     working_dir: /home/node/
     volumes:
       - "./src:/home/node/src"
       - "./test:/home/node/test"
-    entrypoint:
-      - /bin/sh
-      - -c
-      - |
-        ./entrypoint.sh
     ports:
       - "8080:8080"
     networks:
