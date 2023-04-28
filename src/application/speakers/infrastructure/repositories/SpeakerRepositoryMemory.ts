@@ -1,9 +1,10 @@
 import { SpeakerRepository } from '../../domain/SpeakerRepository'
 import { SpeakerId } from '../../../../shared/domain/ids/SpeakerId'
 import { Speaker, SpeakerPrimitives } from '../../domain/Speaker'
+import { Reseteable } from '../../../../shared/infrastructure/repositories/Reseteable'
 
-export class SpeakerRepositoryMemory implements SpeakerRepository {
-  private speakers: Map<string, SpeakerPrimitives> = new Map()
+export class SpeakerRepositoryMemory implements SpeakerRepository, Reseteable {
+  private readonly speakers: Map<string, SpeakerPrimitives> = new Map()
 
   async save(speaker: Speaker): Promise<void> {
     const speakerPrimitives = speaker.toPrimitives()
