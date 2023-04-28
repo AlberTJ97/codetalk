@@ -17,7 +17,7 @@ describe('ReviewTalkEndpoint', () => {
     await endpoint.execute(API_TALK.id, reviewTalkDTO)
 
     const expectedParams: ReviewTalkParams = {
-      talkId: TalkId.fromPrimitives(API_TALK.id),
+      talkId: API_TALK.id,
       reviewerId: OrganizerId.fromPrimitives(FRAN.id),
     }
     expect(reviewTalk.execute).toHaveBeenCalledWith(expectedParams)
