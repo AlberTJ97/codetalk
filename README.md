@@ -9,6 +9,16 @@ by event organizers and approved or rejected.
 
 ![Diagram of the main workflow of the app](./docs/images/codetalk-diagram.png)
 
+## Branches saw on the talk
+
+* [`00-repository-bad`](https://github.com/DanielRamosAcosta/codetalk/tree/00-repository-bad)
+* [`00-repository-good`](https://github.com/DanielRamosAcosta/codetalk/tree/00-repository-good)
+* [`01-objects-good`](https://github.com/DanielRamosAcosta/codetalk/tree/01-objects-good)
+* [`02-use-cases-good`](https://github.com/DanielRamosAcosta/codetalk/tree/02-use-cases-good)
+* [`03-cohesion-good`](https://github.com/DanielRamosAcosta/codetalk/tree/03-cohesion-good)
+* [`04-encapsulation-good`](https://github.com/DanielRamosAcosta/codetalk/tree/04-encapsulation-good)
+* [`05-domain-rules-good`](https://github.com/DanielRamosAcosta/codetalk/tree/05-domain-rules-good)
+* [`06-value-objects-good`](https://github.com/DanielRamosAcosta/codetalk/tree/06-value-objects-good)
 
 ## 💻 I'm a dev, how do I get started?
 
@@ -22,10 +32,10 @@ Prerequisites:
 Now:
 
 ```bash
-git clone git@github.com:DanielRamosAcosta/codetalk.git
+git clone git@github.com:AlbertoGonzalezAlvarez/codetalk.git
 cd codetalk
 yarn install
-docker-compose up -d database # starts DDBB
+docker-compose up -d db # starts DDBB
 yarn start:dev # opens the server in development mode
 ```
 
@@ -52,10 +62,10 @@ You are now good ready to go!! 👯
 
 ### Docker
 
-We use Docker as a utility tool, mainly for running MongoDB. In the `docker-compose.yml` you have two wservuces services:
+We use Docker as a utility tool, mainly for running MongoDB. In the `docker-compose.yml` you have two services:
 
-- `codetalk`: The API if you want to open it as a docker container
-- `database`: A mongodb database that we use for starting the API in development mode and running the integration tests locally.
+- `api`: The API if you want to open it as a docker container
+- `db`: A mongodb database that we use for starting the API in development mode and running the integration tests locally.
 
 ### Project management
 
@@ -73,7 +83,6 @@ We use Docker as a utility tool, mainly for running MongoDB. In the `docker-comp
     - [OpenAPI docs](https://docs.nestjs.com/openapi/introduction)
     - Mainly used as dependency injection container
 - TypeScript
-- [Stripe](https://stripe.com/es)
 
 ## 🏘 How is the code organized?
 
@@ -130,7 +139,7 @@ You can read more about dependency inversion [here](https://en.wikipedia.org/wik
 - Instead, create an interface that represent that interaction
 - Create two implementations of that interface:
     - A "real" implementation (calling TypeORM, Stripe, Fetch HTTP API Call...).
-    - A "fake" implementation just for testing purposes.
+    - A "fake" implementation just for testing purposes (you usually will find it suffixed as "memory").
 
 ### Dependency injection container
 
@@ -141,7 +150,7 @@ A special thing that we have to take into account, is when injecting interfaces.
 The interfaces are a compile-time thing of Typescript, so when we need to inject a certain implementation we need to specify an identifier for that interface with a token.
 
 ```typescript
-// TalkRepository.interface.ts
+// TalkRepository.ts
 export interface TalkRepository {
     save(talk: Talk): Promise<void>
     findBy(talkId: TalkId): Promise<Talk | undefined>
@@ -202,10 +211,9 @@ class ReservationTitle extends ValueObject<string> { /* ... */ }
 ### CI/CD
 
 - The CI and CD are in Github Actions
-- We run the precommit script before each commit using Husky.
 - The CI runs for both acceptance/unitary and integration tests with a real database.
 - After all tests passed, then the API is re-deployed
 
 ## 📲 Contact
 
-The project was mainly developed by [Alberto González](https://github.com/AlberTJ97) and [Daniel Ramos](https://github.com/DanielRamosAcosta) from [Acid Tango](https://acidtango.com/) with ❤️ and 💪
+The project was mainly developed by [Alberto González](https://github.com/AlbertoGonzalezAlvarez) and [Daniel Ramos](https://github.com/DanielRamosAcosta) from [Acid Tango](https://acidtango.com/) with ❤️ and 💪
